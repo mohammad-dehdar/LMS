@@ -4,11 +4,50 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+model Course {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+  title String
+  description String?
+  imageUrl String?
+  price Float?
+  isPublished Boolean @default(false)
+
+  categoryId String? @db.ObjectId
+  category Category? @relation(fields: [categoryId], references: [id])
+
+  attachments Attachments[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+
+model Category {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @unique
+
+  courses Course[]
+}
+
+model Attachments {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  url String
+
+  courseId String @db.ObjectId
+  course Course @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
