@@ -1,3 +1,4 @@
+import ToastProvider from "@/components/Provider/ToastProvider";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
         <body
           className={`antialiased`}
         >
+          <ToastProvider/>
           {children}
         </body>
       </html>
