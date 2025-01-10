@@ -1,10 +1,10 @@
-import { getAuth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 
 export async function POST(req) {
     try {
-        const { userId } = getAuth(req); // استفاده از getAuth برای دریافت userId از درخواست
+        const { userId } = await auth(); // استفاده از getAuth برای دریافت userId از درخواست
         const { title } = await req.json();
 
         if (!userId) {
