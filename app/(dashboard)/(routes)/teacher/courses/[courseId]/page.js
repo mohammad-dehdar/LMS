@@ -6,6 +6,8 @@ import db from "@/lib/db"
 import { IconBadge } from "@/components/templates/dashboard/icon/icon-badge";
 import TitleForm from "@/components/templates/dashboard/TitleForm";
 import DescriptionForm from "@/components/templates/dashboard/DescriptionForm";
+import ImageForm from "@/components/templates/dashboard/ImageForm";
+
 
 async function CourseIdPage({ params }) {
 
@@ -61,6 +63,10 @@ async function CourseIdPage({ params }) {
           courseId={course.id}
           />
           <DescriptionForm
+          initialData={course}
+          courseId={course.id}
+          />
+          <ImageForm
           initialData={course}
           courseId={course.id}
           />

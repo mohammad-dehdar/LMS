@@ -1,6 +1,8 @@
 import Navbar from "@/components/templates/dashboard/Navbar"
 import SideBar from "@/components/templates/dashboard/SideBar"
 
+
+
 function Dashboardlayout({ children }) {
   return (
     <div className="w-full">
