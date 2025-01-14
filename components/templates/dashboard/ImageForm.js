@@ -28,15 +28,6 @@ function ImageForm({ initialData, courseId }) {
 
     const router = useRouter();
 
-    const form = useForm({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            imageUrl: initialData?.imageUrl || ""
-        }
-    });
-
-    const { isSubmitting, isValid } = form.formState;
-
     const submitHandler = async (values) => {
         try {
             await axios.patch(`/api/courses/${courseId}`, values);
@@ -48,7 +39,6 @@ function ImageForm({ initialData, courseId }) {
             toast.error("Something went wrong")
         }
     }
-
 
 
     return (
@@ -95,8 +85,7 @@ function ImageForm({ initialData, courseId }) {
                         endpoint="courseImage"
                         onchange={(url) => {
                             if (url) {
-                                form.setValue("imageUrl", url);
-                                toast.success("Image uploaded successfully!");
+                                submitHandler({imageUrl: url})
                             }
                         }}
                     />

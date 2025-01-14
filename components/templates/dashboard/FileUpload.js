@@ -8,11 +8,7 @@ function FileUpload({ onchange, endpoint }) {
     <UploadDropzone
       endpoint={endpoint}
       onClientUploadComplete={(res) => {
-        if (res && res.length > 0) {
-          onchange(res[0].url);
-        } else {
-          toast.error('No file uploaded. Please try again.');
-        }
+        onchange(res?.[0].url);
       }}
       onUploadError={(error) => {
         toast.error(`Upload failed: ${error.message}`);

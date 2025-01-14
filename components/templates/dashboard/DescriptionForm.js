@@ -35,7 +35,7 @@ function DescriptionForm({ initialData, courseId }) {
 
     const form = useForm({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData
+        defaultValues: initialData?.description || ""
     });
 
     const { isSubmitting, isValid } = form.formState;
