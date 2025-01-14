@@ -7,6 +7,7 @@ import { IconBadge } from "@/components/templates/dashboard/icon/icon-badge";
 import TitleForm from "@/components/templates/dashboard/TitleForm";
 import DescriptionForm from "@/components/templates/dashboard/DescriptionForm";
 import ImageForm from "@/components/templates/dashboard/ImageForm";
+import CategoryForm from "@/components/templates/dashboard/categoryForm";
 
 
 async function CourseIdPage({ params }) {
@@ -22,6 +23,12 @@ async function CourseIdPage({ params }) {
       id: params.courseId
     }
   });
+
+  const categories = await db.category.findMany({
+    orderBy: {
+        name: "asc"
+    }
+  })
   
   if (!course) {
     return redirect("/");
@@ -69,6 +76,14 @@ async function CourseIdPage({ params }) {
           <ImageForm
           initialData={course}
           courseId={course.id}
+          />
+          <CategoryForm
+          initialData={course}
+          courseId={course.id}
+          options={categories.map((category) => ({
+            label : category.name,
+            value: category.id
+          }))}
           />
         </div>
       </div>
