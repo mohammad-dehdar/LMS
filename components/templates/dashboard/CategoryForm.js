@@ -2,7 +2,6 @@
 
 import * as z from "zod"
 import axios from "axios"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
 import {
@@ -19,6 +18,7 @@ import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Combobox } from "@/components/ui/combobox"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const formSchema = z.object({
     categoryId: z.string().min(1)
@@ -47,13 +47,11 @@ function CategoryForm({ initialData, courseId, options }) {
             toggleEdit();
             router.refresh();
         } catch (error) {
-            console.log("Error:", error.response?.data || error.message);
-            toast.error("Something went wrong")          
+            toast.error("Something went wrong")
         }
     }
 
-    const selectedOtions =  options.find(option =>option.values === initialData.categoryId) 
-
+    const selectedOtions = options.find(option => option.value === initialData.categoryId)
 
     return (
         <div className="mt-6 border bg-slate-100 rounded-md p-4">
@@ -72,7 +70,7 @@ function CategoryForm({ initialData, courseId, options }) {
                 </Button>
             </div>
             {!isEditing && (
-                <p className={cn("text-sm mt-2",!initialData.categoryId && "text-slate-500 italic")}>{selectedOtions?.label || "No category"}</p>
+                <p className={cn("text-sm mt-2", !initialData.categoryId && "text-slate-500 italic")}>{selectedOtions?.label ? selectedOtions?.label : "No category" }</p>
             )}
             {isEditing && (
                 <Form {...form}>
@@ -80,7 +78,7 @@ function CategoryForm({ initialData, courseId, options }) {
                         <FormField
                             control={form.control}
                             name="categoryId"
-                            render={({ field }) => ( 
+                            render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
                                         <Combobox
@@ -94,7 +92,7 @@ function CategoryForm({ initialData, courseId, options }) {
                         />
                         <div className="flex items-center gap-x-2">
                             <Button disabled={!isValid || isSubmitting} type="submit">
-                                    Save
+                                Save
                             </Button>
                         </div>
                     </form>

@@ -1,5 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
-import { CircleDollarSign, LayoutDashboard, ListChecks } from "lucide-react";
+import { CircleDollarSign, File, LayoutDashboard, ListChecks } from "lucide-react";
 import { redirect } from "next/navigation";
 
 import db from "@/lib/db"
@@ -9,31 +9,39 @@ import DescriptionForm from "@/components/templates/dashboard/DescriptionForm";
 import ImageForm from "@/components/templates/dashboard/ImageForm";
 import CategoryForm from "@/components/templates/dashboard/categoryForm";
 import PriceForm from "@/components/templates/dashboard/PriceForm"
+import AttachmentForm from "@/components/templates/dashboard/AttachmentForm"
 
 
 async function CourseIdPage({ params }) {
 
-  const { userId } =  await auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return redirect("/");
   }
 
- const course = await db.course.findUnique({
+  const course = await db.course.findUnique({
     where: {
       id: params.courseId
-    }
+    },
+    include: {
+      attachments :{
+        orderBy:{
+          createdAt:"desc",
+        },
+      },
+    },
   });
 
   const categories = await db.category.findMany({
     orderBy: {
-        name: "asc"
-    }
-  })
-  
+      name: "asc",
+    },
+  });
+
   if (!course) {
     return redirect("/");
-  }
+  };
 
   const requiredFields = [
     course.title,
@@ -63,34 +71,34 @@ async function CourseIdPage({ params }) {
       <div className="gird grid-cols-1 md:grid-cols-2  gap-6 mt-16">
         <div>
           <div className="flex items-center gap-x-2">
-            <IconBadge size="sm" icon={LayoutDashboard}/>
+            <IconBadge size="sm" icon={LayoutDashboard} />
             <h2 className="text-xl">Customize your course</h2>
           </div>
           <TitleForm
-          initialData={course}
-          courseId={course.id}
+            initialData={course}
+            courseId={course.id}
           />
           <DescriptionForm
-          initialData={course}
-          courseId={course.id}
+            initialData={course}
+            courseId={course.id}
           />
           <ImageForm
-          initialData={course}
-          courseId={course.id}
+            initialData={course}
+            courseId={course.id}
           />
           <CategoryForm
-          initialData={course}
-          courseId={course.id}
-          options={categories.map((category) => ({
-            label : category.name,
-            value: category.id
-          }))}
+            initialData={course}
+            courseId={course.id}
+            options={categories.map((category) => ({
+              label: category.name,
+              value: category.id
+            }))}
           />
         </div>
         <div className="space-y-6">
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge size="sm" icon={ListChecks}/>
+              <IconBadge size="sm" icon={ListChecks} />
               <h2 className="text-xl">Course Chapters</h2>
             </div>
             <div>
@@ -99,10 +107,20 @@ async function CourseIdPage({ params }) {
           </div>
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge size="sm" icon={CircleDollarSign}/>
+              <IconBadge size="sm" icon={CircleDollarSign} />
               <h2 className="text-xl">Sell your course</h2>
             </div>
             <PriceForm
+              initialData={course}
+              courseId={course.id}
+            />
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge size="sm" icon={File} />
+              <h2 className="text-xl">Resources & Attachments</h2>
+            </div>
+            <AttachmentForm
               initialData={course}
               courseId={course.id}
             />
