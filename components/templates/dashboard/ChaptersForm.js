@@ -72,6 +72,11 @@ function ChaptersForm({ initialData, courseId }) {
             setIsUpdating(false);
         }
     }
+
+    const onEdit = (id) => {
+        router.push(`/teacher/courses/${courseId}/chapters/${id}`);
+
+    }
     return (
         <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
             {isUpdating && (
@@ -124,7 +129,7 @@ function ChaptersForm({ initialData, courseId }) {
                 <div  className={cn("text-sm mt-2", !initialData.chapters.length && "text-slate-500 italic")}>
                     {!initialData.chapters.length && "No chapter"}
                     <ChapterList
-                    onEdit={() => {}} 
+                    onEdit={onEdit} 
                     onReorder={onReorder}
                     items = {initialData.chapters || []}
                     />

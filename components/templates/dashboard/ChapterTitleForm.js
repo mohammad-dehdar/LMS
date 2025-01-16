@@ -20,12 +20,10 @@ import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
-    title: z.string().min(1, {
-        message: "Title is Requierd"
-    })
+    title: z.string().min(1),
 })
 
-function TitleForm({ initialData, courseId, chapterId }) {
+function ChapterTitleForm({ initialData, courseId }) {
     const [isEditing, setIsEditing] = useState(false);
 
     const toggleEdit = () => setIsEditing((current) => !current);
@@ -41,8 +39,8 @@ function TitleForm({ initialData, courseId, chapterId }) {
 
     const submitHandler = async (values) => {
         try {
-            await axios.patch(`/api/courses/${courseId}`, values);
-            toast.success("Course Updated")
+            await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+            toast.success("Chapter updated")
             toggleEdit();
             router.refresh();
         } catch (error) {
@@ -56,7 +54,7 @@ function TitleForm({ initialData, courseId, chapterId }) {
     return (
         <div className="mt-6 border bg-slate-100 rounded-md p-4">
             <div className="font-medium flex items-center justify-between">
-                Course title
+                Chapter title
                 <Button onClick={toggleEdit} variant="ghost">
                     {isEditing && (
                         <>Cancel</>
@@ -64,7 +62,7 @@ function TitleForm({ initialData, courseId, chapterId }) {
                     {!isEditing && (
                         <>
                             <Pencil className="h-4 w-4 mr-2" />
-                            Edit title
+                            Chapter title
                         </>
                     )}
                 </Button>
@@ -83,7 +81,7 @@ function TitleForm({ initialData, courseId, chapterId }) {
                                     <FormControl>
                                         <Input
                                             disabled={isSubmitting}
-                                            placeholder="e.g. 'advanced Web development'"
+                                            placeholder="e.g. 'Introduction to  the course'"
                                             {...field}
                                         />
                                     </FormControl>
@@ -104,4 +102,4 @@ function TitleForm({ initialData, courseId, chapterId }) {
     )
 }
 
-export default TitleForm;
+export default ChapterTitleForm;
