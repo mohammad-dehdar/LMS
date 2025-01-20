@@ -1,12 +1,13 @@
 import { IconBadge } from "@/components/templates/dashboard/icon/icon-badge";
 import db from "@/lib/db";
 import { auth } from "@clerk/nextjs/server"
-import { ArrowLeft, LayoutDashboard } from "lucide-react";
+import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import ChapterTitleForm from "@/components/templates/dashboard/ChapterTitleForm"
-
+import ChapterDescriptionForm from "@/components/templates/dashboard/ChapterDescriptionForm "
+import ChapterAccessForm from "@/components/templates/dashboard/ChapterAccessForm"
 async function ChapterId({ params }) {
   const { userId } = await auth();
 
@@ -63,16 +64,40 @@ async function ChapterId({ params }) {
         <div className="space-y-4">
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge icon={LayoutDashboard}/>
+              <IconBadge icon={LayoutDashboard} />
               <h2 className="text-xl">
                 Customize your chapter
               </h2>
             </div>
-              <ChapterTitleForm
+            <ChapterTitleForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
+            <ChapterDescriptionForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
+            <div className="mt-4">
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={Eye} />
+                <h2 className="text-xl">
+                  Access setting
+                </h2>
+              </div>
+              <ChapterAccessForm
                 initialData={chapter}
                 courseId={params.courseId}
                 chapterId={params.chapterId}
               />
+            </div>
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+                <IconBadge icon={Video}/>
+                <h2 className="text-xl">Add a video</h2>
+            </div>
           </div>
         </div>
       </div>
