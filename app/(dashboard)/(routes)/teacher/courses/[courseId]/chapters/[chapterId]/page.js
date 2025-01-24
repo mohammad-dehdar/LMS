@@ -8,6 +8,8 @@ import { redirect } from "next/navigation";
 import ChapterTitleForm from "@/components/templates/dashboard/ChapterTitleForm"
 import ChapterDescriptionForm from "@/components/templates/dashboard/ChapterDescriptionForm "
 import ChapterAccessForm from "@/components/templates/dashboard/ChapterAccessForm"
+import ChapterVideoForm from "@/components/templates/dashboard/ChapterVideoForm"
+
 async function ChapterId({ params }) {
   const { userId } = await auth();
 
@@ -95,9 +97,14 @@ async function ChapterId({ params }) {
           </div>
           <div>
             <div className="flex items-center gap-x-2">
-                <IconBadge icon={Video}/>
-                <h2 className="text-xl">Add a video</h2>
+              <IconBadge icon={Video} />
+              <h2 className="text-xl">Add a video</h2>
             </div>
+            <ChapterVideoForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
           </div>
         </div>
       </div>
