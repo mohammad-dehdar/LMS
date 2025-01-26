@@ -1,6 +1,7 @@
 import ToastProvider from "@/components/Provider/ToastProvider";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import ConfettiProvider from "@/components/Provider/ConfettiProvider";
 
 
 export const metadata = {
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
         <body
           className={`antialiased`}
         >
+          <ConfettiProvider/>
           <ToastProvider/>
           {children}
         </body>

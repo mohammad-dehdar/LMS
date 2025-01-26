@@ -1,52 +1,56 @@
 import { IconBadge } from "@/components/templates/dashboard/icon/icon-badge";
 import db from "@/lib/db";
-import { auth } from "@clerk/nextjs/server"
+import { auth } from "@clerk/nextjs/server";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import Banner from "@/components/templates/dashboard/Banner"
-import ChapterTitleForm from "@/components/templates/dashboard/ChapterTitleForm"
-import ChapterDescriptionForm from "@/components/templates/dashboard/ChapterDescriptionForm "
-import ChapterAccessForm from "@/components/templates/dashboard/ChapterAccessForm"
-import ChapterVideoForm from "@/components/templates/dashboard/ChapterVideoForm"
-import ChapterActions from "@/components/templates/dashboard/ChapterActions"
+import Banner from "@/components/templates/dashboard/Banner";
+import ChapterTitleForm from "@/components/templates/dashboard/ChapterTitleForm";
+import ChapterDescriptionForm from "@/components/templates/dashboard/ChapterDescriptionForm ";
+import ChapterAccessForm from "@/components/templates/dashboard/ChapterAccessForm";
+import ChapterVideoForm from "@/components/templates/dashboard/ChapterVideoForm";
+import ChapterActions from "@/components/templates/dashboard/ChapterActions";
 
 async function ChapterId({ params }) {
   const { userId } = await auth();
 
   if (!userId) return redirect("/");
 
-  const chapter = await db.chapter.findUnique({
-    where: {
-      id: params.chapterId
-    },
-    include: {
-      muxData: true
-    },
-  });
+  let chapter;
+  try {
+    chapter = await db.chapter.findUnique({
+      where: {
+        id: params.chapterId,
+      },
+      include: {
+        muxData: true,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching chapter:", error);
+    return redirect("/");
+  }
 
   if (!chapter) return redirect("/");
 
   const requiredFields = [
     chapter.title,
     chapter.description,
-    chapter.videoUrl
-  ]
+    chapter.videoUrl,
+  ];
 
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
-
-
-  const completionText = `(${completedFields}/${totalFields})`
-  const isComplete = requiredFields.every(Boolean)
+  const completionText = `(${completedFields}/${totalFields})`;
+  const isComplete = requiredFields.every(Boolean);
 
   return (
     <>
       {!chapter.isPublished && (
         <Banner
           variant="warning"
-          lable="This chapter is unpublished. it will not be visible in the course"
+          label="This chapter is unpublished. It will not be visible in the course."
         />
       )}
       <div className="p-6">
@@ -56,7 +60,7 @@ async function ChapterId({ params }) {
               href={`/teacher/courses/${params.courseId}/`}
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
-              <ArrowLeft className="h-4  w-4 mr-2" />
+              <ArrowLeft className="h-4 w-4 mr-2" />
               Back to course setup
             </Link>
             <div className="flex items-center w-full justify-between">
@@ -65,7 +69,7 @@ async function ChapterId({ params }) {
                   Chapter creation
                 </h1>
                 <span className="text-sm text-slate-700">
-                  Compele All fields {completionText}
+                  Complete All fields {completionText}
                 </span>
               </div>
               <ChapterActions
@@ -77,7 +81,7 @@ async function ChapterId({ params }) {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-16">
           <div className="space-y-4">
             <div>
               <div className="flex items-center gap-x-2">
@@ -110,6 +114,8 @@ async function ChapterId({ params }) {
                 />
               </div>
             </div>
+          </div>
+          <div className="space-y-4">
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={Video} />
@@ -125,7 +131,7 @@ async function ChapterId({ params }) {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default ChapterId
+export default ChapterId;

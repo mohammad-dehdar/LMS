@@ -25,6 +25,7 @@
     "@uploadthing/react": "^7.1.5",
     "add": "^2.0.6",
     "axios": "^1.7.9",
+    "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
@@ -33,6 +34,7 @@
     "next": "^14.2.23",
     "quill": "^2.0.3",
     "react": "^18",
+    "react-confetti": "^6.2.2",
     "react-dom": "^18",
     "react-dropzone": "^14.3.5",
     "react-hook-form": "^7.54.2",
@@ -44,7 +46,8 @@
     "tailwindcss-animate": "^1.0.7",
     "textarea": "^0.3.0",
     "uploadthing": "^7.4.4",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@types/node": "22.10.5",
