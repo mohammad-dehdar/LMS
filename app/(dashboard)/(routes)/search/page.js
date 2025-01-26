@@ -1,6 +1,18 @@
-function SearchPage() {
+import db from "@/lib/db";
+
+import Categories from "@/components/templates/search/Categories"
+
+async function SearchPage() {
+  const categories = await db.category.findMany({
+      orderBy:{
+        name : "asc",
+
+      }
+  })
   return (
-    <div>this is Search Page!</div>
+    <div className="p-6">
+      <Categories items={categories} />
+    </div>
   )
 }
 
