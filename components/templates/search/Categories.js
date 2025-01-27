@@ -18,7 +18,7 @@ const iconMap = {
     "Photography" : FcOldTimeCamera,
     "Fitness" : FcSportsMode,
     "Accounting" : FcSalesPerformance,
-    "Computer Scients" : FcMultipleDevices,
+    "Computer Science" : FcMultipleDevices,
     "Filming" : FcFilmReel,
     "Engineering" : FcEngineering  
 }
