@@ -1,3 +1,5 @@
+"use client"
+
 import { AlertTriangle, CheckCircleIcon } from "lucide-react"
 import { cva } from "class-variance-authority"
 import { cn } from "@/lib/utils"

@@ -111,8 +111,8 @@ model Purchase {
   id String @id @default(uuid()) @map("_id")
   userId String
 
-  courseId String @db.ObjectId
-  course Course @relation(fields:[courseId], references: [id], onDelete: Cascade)
+  courseId String
+  course Course @relation(fields:[courseId] , references: [id], onDelete: Cascade)
 
 
   createdAt DateTime @default(now())
