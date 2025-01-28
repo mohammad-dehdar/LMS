@@ -5,6 +5,7 @@ import db from "@/lib/db";
 
 
 import CourseSidebar from "@/components/templates/course/CourseSidebar";
+import CourseNavbar from "@/components/templates/course/CourseNavbar";
 
 
 async function Courselayout({ children, params }) {
@@ -35,7 +36,7 @@ async function Courselayout({ children, params }) {
         }
     });
 
-    if(!course) {
+    if (!course) {
         return redirect("/");
     }
 
@@ -43,13 +44,20 @@ async function Courselayout({ children, params }) {
 
     return (
         <div className="h-full">
-            <div className="hidden md:flex h-full w-80 flex-col fixed inset-y-0 z-50">
-                <CourseSidebar
-                course={course}
-                progressCount={progressCount}
+            <div className="h-[80px] md:pl-80 fixed inset-y-0 w-full z-50">
+                <CourseNavbar
+                    course={course}
+                    progressCount={progressCount}
+
                 />
             </div>
-            <main className="md:pl-80 h-full ">
+            <div className="hidden md:flex h-full w-80 flex-col fixed inset-y-0 z-50">
+                <CourseSidebar
+                    course={course}
+                    progressCount={progressCount}
+                />
+            </div>
+            <main className="md:pl-80 pt-[80px] h-full ">
                 {children}
             </main>
         </div>

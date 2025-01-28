@@ -2,7 +2,7 @@ import db from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-import CourseSidebarItem from "./CourseSidebarItem"
+import CourseSidebarItem from "@/components/templates/course/CourseSidebarItem"
 
 async function CourseSidebar({ course, progressCount }) {
     const { userId } = await auth();
@@ -17,16 +17,17 @@ async function CourseSidebar({ course, progressCount }) {
         }
     });
 
+
     return (
-        <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm ">
+        <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
             <div className="p-8 flex flex-col border-b">
-                <h1 className="font-semibold">
+                <h1 className="font-semibold text-center">
                     {course.title}
                 </h1>
                 {/* check purchase and add progress */}
             </div>
-            <div className="flex flex-col ">
-                {CourseSidebar.chapters?.map((chapter) => {
+            <div className="flex flex-col w-full">
+                {course.chapters.map((chapter) => (
                     <CourseSidebarItem
                         key={chapter.id}
                         id={chapter.id}
@@ -35,7 +36,7 @@ async function CourseSidebar({ course, progressCount }) {
                         courseId={course.id}
                         isLocked={!chapter.isFree && !purchase}
                     />
-                })}
+                ))}
             </div>
         </div>
     )

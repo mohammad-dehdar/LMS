@@ -19,7 +19,7 @@ export const getCourses = async ({
   userId,
   title,
   categoryId
-}: GetCourse): Promise<CourseWithProgressWithCategory> => {
+}: GetCourse): Promise<CourseWithProgressWithCategory[]> => {
   try {
     const courses = await db.course.findMany({
       where: {
@@ -41,7 +41,7 @@ export const getCourses = async ({
         },
         purchases: {
           where: {
-            userId
+            userId,
           }
         }
       },
