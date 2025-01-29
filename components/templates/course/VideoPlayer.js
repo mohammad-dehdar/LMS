@@ -20,36 +20,36 @@ function VideoPlayer({
     completeOnEnd,
     title,
 }) {
-
-    const [isReady, setIsReady] = useState(false)
+    const [isReady, setIsReady] = useState(false);
 
     return (
-        <div className="relative aspect-video ">
+        <div className="relative aspect-video w-full h-[220px] md:h-[400px] lg:h-[500px]">
             {!isReady && !isLocked && (
-                <div className="absolute inset-0 flex items-center justify-center bg-slate-800">
-                    <Loader2 className="h-8 w-8 animate-spin text-secondary" />
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-800 w-full h-full">
+                    <Loader2 className="h-12 w-12 animate-spin text-secondary" />
                 </div>
             )}
             {isLocked && (
-                <div className="absolute inset-0 flex items-center justify-center bg-slate-800 flex-col gap-y-2 text-secondary">
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-800 flex-col gap-y-2 text-secondary w-full h-full">
                     <Lock className="h-8 w-8" />
-                    <p className="text-sm">
-                        This chapter is Locked
-                    </p>
+                    <p className="text-sm">This chapter is Locked</p>
                 </div>
             )}
             {!isLocked && (
                 <MuxPlayer
                     title={title}
-                    className={cn(!isReady && "hidden")}
+                    className="w-full h-full"
                     onCanPlay={() => setIsReady(true)}
-                    onEnded={()=> {}}
+                    onLoadedData={() => setIsReady(true)}
+                    onPlay={() => setIsReady(true)}
+                    onEnded={() => {}}
                     autoPlay
                     playbackId={playbackId}
                 />
             )}
         </div>
-    )
+    );
 }
+
 
 export default VideoPlayer

@@ -87,9 +87,13 @@ async function ChapterIdPage({ params }) {
             <Separator />
             <div className="p-4">
               {attachments.map((attachment) => {
-                <a href={attachment.url} target="_blank" key={attachment.id} className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline ">
-                  <File/>
-                  <p>{attachment.name}</p>
+                <a
+                  href={attachment.url}
+                  target="_blank"
+                  key={attachment.id} 
+                  className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline">
+                  <File />
+                  <p className="line-clamp-1">{attachment.name}</p>
                 </a>
               })}
             </div>
