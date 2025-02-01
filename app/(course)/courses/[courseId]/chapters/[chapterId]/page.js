@@ -9,6 +9,7 @@ import Banner from "@/components/templates/dashboard/Banner";
 import VideoPlayer from "@/components/templates/course/VideoPlayer";
 import CourseEnrollButton from "@/components/templates/course/CourseEnrollButton"
 import Preview from "@/components/templates/dashboard/preview";
+import CourseProgressButton from "@/components/templates/course/CourseProgressButton";
 
 async function ChapterIdPage({ params }) {
   const { userId } = await auth()
@@ -38,7 +39,7 @@ async function ChapterIdPage({ params }) {
   const completeOnEnd = !!purchase & !userProgress?.isCompleted;
 
   return (
-    <div>
+    <div className="px-4 sm:px-6 lg:px-8">
       {userProgress?.isCompleted && (
         <Banner
           variant="success"
@@ -48,11 +49,11 @@ async function ChapterIdPage({ params }) {
       {isLocked && (
         <Banner
           variant="warning"
-          label="You need to purchase this course  to watch this chapter."
+          label="You need to purchase this course to watch this chapter."
         />
       )}
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
-        <div className="p-4 w-fit">
+        <div className="p-4 w-full">
           <VideoPlayer
             chapter={params.chapterId}
             title={chapter.title}
@@ -64,12 +65,17 @@ async function ChapterIdPage({ params }) {
           />
         </div>
         <div className="p-4 flex flex-col md:flex-row items-center justify-between">
-          <h2 className="text-2xl font-semibold mb-2">
+          <h2 className="text-2xl font-semibold mb-2 md:mb-0">
             {chapter.title}
           </h2>
           {purchase ? (
             <div>
-              {/* Todo:add Course */}
+              <CourseProgressButton
+                chapterId={params.chapterId}
+                courseId={params.courseId}
+                nextChapterId={nextChapter?.id}
+                isCompleted={!!userProgress?.isCompleted}
+              />
             </div>
           ) : (
             <CourseEnrollButton
@@ -86,16 +92,16 @@ async function ChapterIdPage({ params }) {
           <>
             <Separator />
             <div className="p-4">
-              {attachments.map((attachment) => {
+              {attachments.map((attachment) => (
                 <a
                   href={attachment.url}
                   target="_blank"
-                  key={attachment.id} 
+                  key={attachment.id}
                   className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline">
-                  <File />
+                  <File className="mr-2" />
                   <p className="line-clamp-1">{attachment.name}</p>
                 </a>
-              })}
+              ))}
             </div>
           </>
         )}

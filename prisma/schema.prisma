@@ -123,10 +123,9 @@ model Purchase {
 }
 
 model StripeCustomer {
-  id String @id @default(uuid()) @map("_id")
-  userId String  @unique
-  stripeCustomerId DateTime @default(now())
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String   @id @default(uuid()) @map("_id")
+  userId           String   @unique
+  stripeCustomerId String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }

@@ -5,7 +5,11 @@ function SideBarItem({ icon: Icon, label, href }) {
     const pathname = usePathname();
     const router = useRouter();
 
-    const isActive = pathname.startsWith(href);
+    // تغییر شرط isActive
+    const isActive = 
+        href === '/' 
+        ? pathname === href 
+        : pathname === href || pathname.startsWith(`${href}/`);
 
     const clickHandler = () => {
         if (!isActive) {

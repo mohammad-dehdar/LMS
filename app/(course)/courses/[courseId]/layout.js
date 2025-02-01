@@ -3,15 +3,12 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import db from "@/lib/db";
 
-
 import CourseSidebar from "@/components/templates/course/CourseSidebar";
 import CourseNavbar from "@/components/templates/course/CourseNavbar";
-
 
 async function Courselayout({ children, params }) {
     const { userId } = await auth();
     if (!userId) redirect("/");
-
 
     const course = await db.course.findUnique({
         where: {
@@ -40,7 +37,7 @@ async function Courselayout({ children, params }) {
         return redirect("/");
     }
 
-    const progressCount = await getProgress(userId, course.id)
+    const progressCount = await getProgress(userId, course.id);
 
     return (
         <div className="h-full">
@@ -48,7 +45,6 @@ async function Courselayout({ children, params }) {
                 <CourseNavbar
                     course={course}
                     progressCount={progressCount}
-
                 />
             </div>
             <div className="hidden md:flex h-full w-80 flex-col fixed inset-y-0 z-50">
@@ -57,11 +53,11 @@ async function Courselayout({ children, params }) {
                     progressCount={progressCount}
                 />
             </div>
-            <main className="md:pl-80 pt-[80px] h-full ">
+            <main className="md:pl-80 pt-[80px] h-full">
                 {children}
             </main>
         </div>
-    )
+    );
 }
 
-export default Courselayout
+export default Courselayout;
