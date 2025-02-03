@@ -22,22 +22,22 @@ export async function POST(req, { params }) {
 
         const lastChapter = await db.chapter.findFirst({
             where: {
-                id: params.courseId,
+                courseId: params.courseId,
             },
             orderBy: {
                 position: "desc"
             }
-        })
+        });
 
-        const newPosition = lastChapter ? lastChapter.position + 1  : 1;
+        const newPosition = lastChapter ? lastChapter.position + 1 : 1;
 
         const chapter = await db.chapter.create({
-            data : {
+            data: {
                 title,
                 courseId: params.courseId,
                 position: newPosition
             }
-        })
+        });
 
         return NextResponse.json(chapter);
     } catch (error) {

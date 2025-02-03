@@ -1,23 +1,12 @@
 "use client"
 
-import axios from "axios";
 import MuxPlayer from "@mux/mux-player-react";
 import { useState } from "react";
-import { toast } from "react-hot-toast"
-import { useRouter } from "next/navigation"
 import { Loader2, Lock } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-import { useConfettiStore } from "@/hooks/use-confetti-store";
-
 
 function VideoPlayer({
     playbackId,
-    courseId,
-    chapterId,
-    nextChapterId,
-    isLocked,
-    completeOnEnd,
+    isLocked, 
     title,
 }) {
     const [isReady, setIsReady] = useState(false);
@@ -42,7 +31,6 @@ function VideoPlayer({
                     onCanPlay={() => setIsReady(true)}
                     onLoadedData={() => setIsReady(true)}
                     onPlay={() => setIsReady(true)}
-                    onEnded={() => {}}
                     autoPlay
                     playbackId={playbackId}
                 />

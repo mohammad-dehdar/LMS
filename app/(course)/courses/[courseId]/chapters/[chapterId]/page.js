@@ -57,6 +57,7 @@ async function ChapterIdPage({ params }) {
             playbackId={muxData?.playbackId}
             isLocked={isLocked}
             completeOnEnd={completeOnEnd}
+            isCompleted={!!userProgress?.isCompleted}
           />
         </div>
         <div className="p-4 flex flex-col md:flex-row items-center justify-between">

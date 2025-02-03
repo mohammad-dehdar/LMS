@@ -21,7 +21,6 @@ export const getChapter = async ({
         }
       }
     })
-    console.log('Purchase:', purchase)
 
     const course = await db.course.findUnique({
       where: {
@@ -32,7 +31,6 @@ export const getChapter = async ({
         price: true
       }
     })
-    console.log('Course:', course)
 
     const chapter = await db.chapter.findUnique({
       where: {
@@ -40,7 +38,6 @@ export const getChapter = async ({
         isPublished: true
       }
     })
-    console.log('Chapter:', chapter)
 
     if (!chapter || !course) {
       throw new Error('Chapter or course not Found')
@@ -56,16 +53,14 @@ export const getChapter = async ({
           courseId: courseId
         }
       })
-      console.log('Attachments:', attachments)
     }
 
-    if(chapter.isFree || purchase) {
+    if (chapter.isFree || purchase) {
       muxData = await db.muxData.findUnique({
         where: {
           chapterId: chapterId
         }
       })
-      console.log('MuxData:', muxData)
 
       nextChapter = await db.chapter.findFirst({
         where: {
@@ -79,7 +74,6 @@ export const getChapter = async ({
           position: 'asc'
         }
       })
-      console.log('NextChapter:', nextChapter)
     }
 
     const userProgress = await db.userProgress.findUnique({
@@ -90,7 +84,6 @@ export const getChapter = async ({
         }
       }
     })
-    console.log('UserProgress:', userProgress)
 
     return {
       chapter,
@@ -102,7 +95,6 @@ export const getChapter = async ({
       purchase
     }
   } catch (error) {
-    console.error('Error fetching chapter data:', error)
     return {
       chapter: null,
       course: null,
