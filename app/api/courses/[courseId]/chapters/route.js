@@ -4,7 +4,7 @@ import db from "@/lib/db";
 
 export async function POST(req, { params }) {
     try {
-        const { userId } = await auth(); // استفاده از getAuth برای دریافت userId از درخواست
+        const { userId } = await auth();
         const { title } = await req.json();
 
         if (!userId) {

@@ -1,7 +1,8 @@
 import { Category, Course } from '@prisma/client'
-import { getProgress } from './get-progress'
 
+import { getProgress } from './get-progress'
 import db from '@/lib/db'
+
 
 type CourseWithProgressWithCategory = Course & {
   category: Category | null
@@ -50,24 +51,26 @@ export const getCourses = async ({
       }
     })
 
-    const courseWithProgress : CourseWithProgressWithCategory[] = await Promise.all(
-        courses.map(async course => {
-            if (course.purchases.length === 0) {
-                return {
-                    ...course,
-                    progress : null,
-                }
-            }
+    const courseWithProgress: CourseWithProgressWithCategory[] = await Promise.all(
+      courses.map(async (course) => {
+        if (course.purchases.length === 0) {
+          return {
+            ...course,
+            progress: null,
+            chapter: course.chapters, // Ensure chapter is included
+          };
+        }
+    
+        const progressPercentage = await getProgress(userId, course.id);
+    
+        return {
+          ...course,
+          progress: progressPercentage,
+          chapter: course.chapters, // Ensure chapter is included
+        };
+      })
+    );
 
-            const progressPrecentage = await  getProgress(userId, course.id);
-
-            return {
-                ...course,
-                progress : progressPrecentage,
-            }
-        })
-        
-    ) 
     return courseWithProgress;
   } catch (error) {
     console.log('[GET_COURSES]', error)

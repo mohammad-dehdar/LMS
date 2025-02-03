@@ -14,13 +14,10 @@ function CourseEnrollButton({price,courseId}) {
       setIsLoading(true);
   
       const response = await axios.post(`/api/courses/${courseId}/checkout`);
-      
-      console.log("Redirecting to:", response.data.url);
+       
       window.location.assign(response.data.url)
     } catch (error) {
-      console.error("Checkout Error:", error);
-      toast.error(error?.response?.data?.message || "Something went wrong");
-      setIsLoading(false); // Ensure isLoading is reset on error
+      toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }

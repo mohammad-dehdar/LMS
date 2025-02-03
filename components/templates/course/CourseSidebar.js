@@ -30,7 +30,7 @@ async function CourseSidebar({ course, progressCount }) {
                         <div className="mt-10">
                             <CourseProgress
                             variant="success"
-                            value="progressCount"
+                            value={progressCount}
                             />
                         </div>
                     )

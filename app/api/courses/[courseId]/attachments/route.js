@@ -1,10 +1,10 @@
 import db from "@/lib/db";
-import { getAuth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function POST(req, { params }) {
   try {
-    const { userId } = getAuth(req); // گرفتن userId از Clerk
+    const { userId } = await auth(); // گرفتن userId از Clerk
     const { url } = await req.json(); // گرفتن url از بدنه درخواست
 
     if (!userId) return new NextResponse("Unauthorized", { status: 401 });

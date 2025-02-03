@@ -1,18 +1,16 @@
 import { getChapter } from "@/actions/get-chapter";
-
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { File } from "lucide-react";
-
-import { Separator } from "@/components/ui/separator"
+import { Separator } from "@/components/ui/separator";
 import Banner from "@/components/templates/dashboard/Banner";
 import VideoPlayer from "@/components/templates/course/VideoPlayer";
-import CourseEnrollButton from "@/components/templates/course/CourseEnrollButton"
+import CourseEnrollButton from "@/components/templates/course/CourseEnrollButton";
 import Preview from "@/components/templates/dashboard/preview";
 import CourseProgressButton from "@/components/templates/course/CourseProgressButton";
 
 async function ChapterIdPage({ params }) {
-  const { userId } = await auth()
+  const { userId } = await auth();
 
   if (!userId) return redirect("/");
 
@@ -23,12 +21,12 @@ async function ChapterIdPage({ params }) {
     attachments,
     nextChapter,
     userProgress,
-    purchase
+    purchase,
   } = await getChapter({
     userId,
     chapterId: params.chapterId,
     courseId: params.courseId,
-  })
+  });
 
 
   if (!chapter || !course) {
@@ -36,15 +34,12 @@ async function ChapterIdPage({ params }) {
   }
 
   const isLocked = !chapter.isFree && !purchase;
-  const completeOnEnd = !!purchase & !userProgress?.isCompleted;
+  const completeOnEnd = !!purchase && !userProgress?.isCompleted;
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
+    <div >
       {userProgress?.isCompleted && (
-        <Banner
-          variant="success"
-          label="You already completed this chapter."
-        />
+        <Banner variant="success" label="You already completed this chapter." />
       )}
       {isLocked && (
         <Banner
@@ -52,7 +47,7 @@ async function ChapterIdPage({ params }) {
           label="You need to purchase this course to watch this chapter."
         />
       )}
-      <div className="flex flex-col max-w-4xl mx-auto pb-20">
+      <div className="px-4 sm:px-6 lg:px-8 flex flex-col max-w-4xl mx-auto pb-20">
         <div className="p-4 w-full">
           <VideoPlayer
             chapter={params.chapterId}
@@ -107,7 +102,7 @@ async function ChapterIdPage({ params }) {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default ChapterIdPage
+export default ChapterIdPage;
