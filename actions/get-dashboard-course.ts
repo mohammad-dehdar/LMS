@@ -1,8 +1,9 @@
 import db from '@/lib/db'
-import { Category, Chapter } from '@prisma/client'
+import { Category, Chapter, Course } from '@prisma/client'
 import { getProgress } from './get-progress'
 
-type CourseWithProgressWithCategory = {
+// Extended Course type that includes the properties we need
+type CourseWithProgressWithCategory = Course & {
   category: Category
   chapters: Chapter[]
   progress: number | null
@@ -17,7 +18,6 @@ export const getDashboardCourses = async (
   userId: string
 ): Promise<DashboardCourse> => {
   try {
-    // یافتن دوره‌های خریداری شده توسط کاربر
     const purchasedCourses = await db.purchase.findMany({
       where: {
         userId: userId
@@ -36,25 +36,27 @@ export const getDashboardCourses = async (
       }
     })
 
-    // استخراج دوره‌ها از نتایج خریدها
-    const courses = purchasedCourses.map((purchase) => purchase.course) as CourseWithProgressWithCategory[];
+    // First cast to unknown, then to our desired type to avoid direct type mismatch
+    const courses = await Promise.all(
+      purchasedCourses.map(async (purchase) => {
+        const courseWithProgress = purchase.course as CourseWithProgressWithCategory;
+        const progress = await getProgress(userId, courseWithProgress.id);
+        return {
+          ...courseWithProgress,
+          progress
+        };
+      })
+    );
 
-    // محاسبه پیشرفت کاربر در هر دوره
-    for (let course of courses) {
-      const progress = await getProgress(userId, course.id);
-      course["progress"] = progress;
-    }
-
-    // دسته‌بندی دوره‌ها به دوره‌های تکمیل شده و دوره‌های در حال پیشرفت
-    const completedCourses = courses.filter((course) => course.progress === 100)
-    const coursesInProgress = courses.filter((course) => (course.progress ?? 0) < 100)
+    const completedCourses = courses.filter((course) => course.progress === 100);
+    const coursesInProgress = courses.filter((course) => (course.progress ?? 0) < 100);
 
     return {
       completedCourses,
       coursesInProgress
     }
   } catch (error) {
-    console.log('[GET_DASHBOARD_COURSES]', error)
+    console.log('[GET_DASHBOARD_COURSES]', error);
     return {
       completedCourses: [],
       coursesInProgress: []
