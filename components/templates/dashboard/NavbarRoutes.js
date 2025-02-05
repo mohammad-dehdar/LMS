@@ -2,15 +2,16 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-
+import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs"
 import { LogOut } from "lucide-react";
-
+import { isTeacher } from "@/lib/teacher"; // تابع isTeacher رو ایمپورت میکنیم
 import SearchInput from "@/components/templates/search/SearchInput"
 
 function NavbarRoutes() {
     const pathName = usePathname();
+    const { user } = useUser();
 
     const isTeacherPage = pathName?.startsWith("/teacher");
     const isCoursesPage = pathName?.includes("/courses");
@@ -32,11 +33,14 @@ function NavbarRoutes() {
                         </Button>
                     </Link>
                 ) : (
-                    <Link href="teacher/courses">
-                        <Button size="sm" variant="ghost">
-                            Teacher mode
-                        </Button>
-                    </Link>
+                    // فقط اگر کاربر teacher بود، دکمه رو نمایش میدیم
+                    isTeacher(user?.id || null) && (
+                        <Link href="teacher/courses">
+                            <Button size="sm" variant="ghost">
+                                Teacher mode
+                            </Button>
+                        </Link>
+                    )
                 )}
                 <UserButton afterSignOutUrl="/" />
             </div>
