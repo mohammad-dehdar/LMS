@@ -6,12 +6,13 @@ import { redirect } from "next/navigation";
 import TitleForm from "@/components/templates/dashboard/TitleForm";
 import DescriptionForm from "@/components/templates/dashboard/DescriptionForm";
 import ImageForm from "@/components/templates/dashboard/ImageForm";
-import CategoryForm from "@/components/templates/dashboard/categoryForm";
+
 import PriceForm from "@/components/templates/dashboard/PriceForm";
 import AttachmentForm from "@/components/templates/dashboard/AttachmentForm";
 import ChaptersForm from "@/components/templates/dashboard/ChaptersForm";
 import Banner from "@/components/templates/dashboard/Banner";
 import Actions from "@/components/templates/dashboard/Actions";
+import CategoryForm from "@/components/templates/dashboard/CategoryForm";
 
 async function CourseIdPage({ params }) {
   const { userId } = await auth();
