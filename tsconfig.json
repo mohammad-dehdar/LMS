@@ -31,7 +31,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/templates/dashboard/FileUpload.js", "app/api/courses/[courseId]/checkout/route.ts", "components/templates/course/CourseEnrollButton.js", "components/ui/progress.tsx"  ],
+, "components/templates/dashboard/FileUpload.js", "app/api/courses/[courseId]/checkout/route.ts", "components/templates/course/CourseEnrollButton.js", "components/ui/progress.tsx", "components/templates/dashboard/Columns.js", "components/templates/dashboard/DataTable.js"  ],
   "exclude": [
     "node_modules"
   ]
