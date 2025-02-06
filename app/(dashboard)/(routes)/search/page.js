@@ -1,12 +1,16 @@
+export const dynamic = 'force-dynamic';
+
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 
 import db from "@/lib/db";
 import SearchInput from "@/components/templates/search/SearchInput";
 import { getCourses } from "@/actions/get-courses";
-import Categories from "@/components/templates/search/Categories";
+
+import Categories from "@/components/templates/search/Categories"
 import CoursesList from "@/components/templates/search/CoursesList";
+import { Suspense } from "react";
+
 
 const SearchPage = async ({ searchParams }) => {
   const { userId } = await auth();
