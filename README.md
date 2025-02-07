@@ -32,11 +32,11 @@
 
 ## 📸 پیش‌نمایش پروژه
 ### 🎯 داشبورد مدرسین:
-![Instructor Dashboard](https://github.com/mohammad-dehdar/LMS/issues/1#issue-2838221199)
+![Image](https://github.com/user-attachments/assets/fc988feb-2467-4542-9aaa-ebec3be754ea)
 
 
 ### 📚 صفحه دوره‌ها:
-![courses Page](https://github.com/mohammad-dehdar/LMS/issues/2#issue-2838224568)
+![Image](https://github.com/user-attachments/assets/efcfaaaa-880f-4345-aa5d-ff912faaab6e)
 
 ---
 
