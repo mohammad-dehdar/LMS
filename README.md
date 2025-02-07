@@ -34,9 +34,12 @@
 ### 🎯 داشبورد مدرسین:
 ![Image](https://github.com/user-attachments/assets/fc988feb-2467-4542-9aaa-ebec3be754ea)
 
+### 🎯 صفحه آنالیز دوره ها:
+![Image](https://github.com/user-attachments/assets/b75533d8-e03e-48da-9bff-b08dd7b15e55)
 
 ### 📚 صفحه دوره‌ها:
 ![Image](https://github.com/user-attachments/assets/efcfaaaa-880f-4345-aa5d-ff912faaab6e)
+
 
 ---
 
